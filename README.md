@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### Mosquitto MQTT Subscriber Example
 The example shows an implementation of MQTT Subscriber. 
 For details please refer to the [documentation](https://click.kaspersky.com/?hl=en-us&link=online_help&pid=kos&version=1.1).
@@ -14,3 +15,6 @@ A static IP address 10.0.2.2 is set for Mosquito broker using env variable MQTT_
 You can change the broker's address in the file env/src/env.c according to your network configuration.
 
 © 2022 AO Kaspersky Lab
+=======
+# kos-prog
+>>>>>>> 0f74ee0c291facc719280e5dc1a23b26b2abe281
