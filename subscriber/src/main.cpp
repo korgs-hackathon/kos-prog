@@ -9,7 +9,6 @@
 #include "general.h"
 #include "subscriber.h"
 #include "gpio.h"
-#include "motor.h"
 
 namespace consts {
 constexpr const char *DefaultMqttAddress = "10.0.2.2";
@@ -79,26 +78,12 @@ void gpio_thread() {
             fprintf(stderr, "gpio_set err");
         sleep(2);
     }*/
-    Motor mtr = Motor(MOTOR_CFG_DEFAULT);
-    mtr.Enable();
-    mtr.Run(STOP);
-    
-    while (true) {
-        mtr.Run(FORWARD);
-        sleep(5);
-        mtr.Run(BACKWARD);
-        sleep(5);
-        mtr.Run(LEFT);
-        sleep(5);
-        mtr.Run(RIGHT);
-        sleep(5);
-    }
 }
 
 int main(void)
 {
     //std::thread gpio_thr(gpio_thread);
-    gpio_thread();
+    //gpio_thread();
     if (!wait_for_network())
     {
         std::cerr << app::AppTag << "Error: Wait for network failed!"

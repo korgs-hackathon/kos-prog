@@ -1,3 +1,5 @@
+#pragma once
+
 #include <gpio/gpio.h>
 
 #define GPIO_HIGH_LEVEL 1

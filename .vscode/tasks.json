@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "sudo docker exec 1d3e55bedc68 /workspace/program/cross-build.sh",
+            "command": "./cross-build.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true

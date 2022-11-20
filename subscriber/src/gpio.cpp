@@ -110,3 +110,11 @@ int gpio_set(int pin, int val) {
 int gpio_close() {
     return rcOk == GpioClosePort(handle);
 }
+
+int gpio_reg_callback(int pin, GpioEventCb cb, void *ctx) {
+    return rcOk == GpioRegisterEventCb(handle, pin, cb, ctx);
+}
+
+void gpio_unreg_callback(int pin) {
+    GpioUnregisterEventCb(handle, pin);
+}

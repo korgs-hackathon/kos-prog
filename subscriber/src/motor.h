@@ -1,10 +1,12 @@
+#pragma once
+
 #include "gpio.h"
 #include "stdio.h"
 
 #define MOTOR_TAG "[MOTOR]: "
 
 struct MotorConfig {
-    int in1, in2, in3, in4, ena, enb;
+    int in1, in2, in3, in4, ena, enb, encl, encr;
 };
 
 enum Direction {
@@ -21,12 +23,15 @@ MotorConfig MOTOR_CFG_DEFAULT = {
     .in3 = 20,
     .in4 = 21,
     .ena = 6,
-    .enb = 26
+    .enb = 26,
+    .encl = 1,
+    .encr = 2
 };
 
 class Motor {
 private:
     MotorConfig cfg;
+    Direction dir;
 
     int InitMotorPin(int pin) {
         if (!gpio_set_mode(pin, GPIO_DIR_OUT)) {
@@ -56,6 +61,10 @@ public:
         InitMotorPin(cfg.in4);
         InitMotorPin(cfg.ena);
         InitMotorPin(cfg.enb);
+
+        gpio_set_mode(cfg.encl, (GpioMode)(GPIO_DIR_IN | GPIO_EVENT_RISE_EDGE));
+        gpio_set_mode(cfg.encr, (GpioMode)(GPIO_DIR_IN | GPIO_EVENT_RISE_EDGE));
+
     }
 
     void Disable() {
@@ -69,27 +78,29 @@ public:
     }
 
     void Run(Direction dir) {
+        this->dir = dir;
+
         switch (dir)
         {
         case STOP:
             SetPinsValues(0, 0, 0, 0);
-            fprintf(stderr, MOTOR_TAG "STOP\n");
+            //fprintf(stderr, MOTOR_TAG "STOP\n");
             break;
         case FORWARD:
             SetPinsValues(1, 0, 0, 1);
-            fprintf(stderr, MOTOR_TAG "FORWARD\n");
+            //fprintf(stderr, MOTOR_TAG "FORWARD\n");
             break;
         case BACKWARD:
             SetPinsValues(0, 1, 1, 0);
-            fprintf(stderr, MOTOR_TAG "BACKWARD\n");
+            //fprintf(stderr, MOTOR_TAG "BACKWARD\n");
             break;
         case LEFT:
             SetPinsValues(1, 0, 0, 0);
-            fprintf(stderr, MOTOR_TAG "LEFT\n");
+            //fprintf(stderr, MOTOR_TAG "LEFT\n");
             break;
         case RIGHT:
             SetPinsValues(0, 0, 0, 1);
-            fprintf(stderr, MOTOR_TAG "RIGHT\n");
+            //fprintf(stderr, MOTOR_TAG "RIGHT\n");
             break;
         default:
             SetPinsValues(0, 0, 0, 0);
